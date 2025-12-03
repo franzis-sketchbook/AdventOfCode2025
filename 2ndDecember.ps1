@@ -60,12 +60,26 @@ function IsInvalidPart2 {
         }
     }
 
-    if ($number.Length % 10 -eq 0) {
-        $part1 = $number.Substring(0, $number.Length / 5);
-        $part2 = $number.Substring($number.Length / 5);
-        if (($part1 -eq $part2)) {
+    $isValid = $true;
+    $data = @();
+    if ($number.Length % 5 -eq 0) {
+        for ($i = 1; $i -lt $number.Length / 5; $i++) {
+            if ($i ==1) {
+                $data += $number.Substring(0, $i * 5);
+            }
+            else {
+                $data += $number.Substring(($i-1)*5, $i * 5);
+            }
+        }
+        $number | ForEach-Object {
+            if ($_ -ne $char) {
+                $isValid = $false;
+            }
+        }
+        if ($isValid) {
             return $true;
         }
+        return $true;
     }
     return $false;
 }
